@@ -1,0 +1,73 @@
+; Мир весёлых машинок 3D — Godot 4.3 project
+; Kid-friendly 3D open world game (Android / landscape)
+
+config_version=5
+
+[application]
+
+config/name="Мир весёлых машинок 3D"
+config/description="Большой добрый 3D-мир машинок для детей от 4 лет: поездки, мойка, покраска, ремонт, ферма и стройка."
+run/main_scene="res://ui/main_menu.tscn"
+config/features=PackedStringArray("4.3", "GL Compatibility")
+config/icon="res://icon.svg"
+boot_splash/bg_color=Color(0.45, 0.76, 0.97, 1)
+boot_splash/show_image=false
+
+[audio]
+
+driver/enable_input=true
+
+[autoload]
+
+SettingsManager="*res://autoload/settings_manager.gd"
+SaveSystem="*res://autoload/save_system.gd"
+GameState="*res://autoload/game_state.gd"
+ProgressSystem="*res://autoload/progress_system.gd"
+AudioManager="*res://autoload/audio_manager.gd"
+QuestSystem="*res://autoload/quest_system.gd"
+UIManager="*res://autoload/ui_manager.gd"
+SceneRouter="*res://autoload/scene_router.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/size/window_width_override=1280
+window/size/window_height_override=720
+window/handheld/orientation=0
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/vsync/vsync_mode=1
+
+[gui]
+
+theme/default_font_multichannel_signed_distance_field=true
+common/snap_controls_to_pixels=true
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[layer_names]
+
+3d_physics/layer_1="world"
+3d_physics/layer_2="vehicle"
+3d_physics/layer_3="props"
+3d_physics/layer_4="triggers"
+3d_physics/layer_5="water"
+
+[physics]
+
+3d/default_gravity=12.0
+common/physics_ticks_per_second=60
+common/max_physics_steps_per_frame=6
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
+anti_aliasing/quality/msaa_3d=1
+environment/defaults/default_clear_color=Color(0.53, 0.78, 0.95, 1)
+lights_and_shadows/directional_shadow/soft_shadow_filter_quality=1
+lights_and_shadows/directional_shadow/size=2048
