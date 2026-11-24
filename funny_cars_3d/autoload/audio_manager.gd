@@ -117,6 +117,14 @@ func play_music(name: String = "music_main", fade: float = 0.8) -> void:
 	_music_tween.tween_property(_music, "volume_db", 0.0, maxf(fade, 0.01))
 
 
+## Zone background: uses music_<zone> when it exists, otherwise the main theme.
+func play_ambient(zone: String) -> void:
+	var track := "music_" + zone
+	if stream(track) == null:
+		track = "music_main"
+	play_music(track, 1.2)
+
+
 func stop_music(fade: float = 0.5) -> void:
 	if _music_tween != null and _music_tween.is_valid():
 		_music_tween.kill()
