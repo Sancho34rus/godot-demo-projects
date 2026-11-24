@@ -22,15 +22,13 @@ func welcome_key() -> String:
 func raw_height(x: float, z: float) -> float:
 	var pit := ConstructionSystem.PIT_RECT
 	var base := sin(x * 0.03) * 0.05 + cos(z * 0.04) * 0.05
-	var inside := Vector2(x, z)
-	var edge := 0.0
 	var dx := maxf(pit.position.x - x, maxf(0.0, x - pit.end.x))
 	var dz := maxf(pit.position.y - z, maxf(0.0, z - pit.end.y))
-	edge = Vector2(dx, dz).length()
+	var edge := Vector2(dx, dz).length()
 	if edge < 0.01:
 		return -2.0 + base
 	var k := clampf(edge / 4.0, 0.0, 1.0)
-	return lerpf(-2.0, 0.0, k * k * (3.0 - 2.0 * k)) + base + inside.x * 0.0
+	return lerpf(-2.0, 0.0, k * k * (3.0 - 2.0 * k)) + base
 
 
 func _build_zone() -> void:

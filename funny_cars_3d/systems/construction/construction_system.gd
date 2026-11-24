@@ -22,9 +22,7 @@ var road_area: Area3D
 var crane_tower: Node3D
 var crates: Array = []
 var build_blocks := 0
-var _roller_inside := false
 var _road_done := false
-var _sand_cd := 0.0
 
 
 func setup(w: WorldBase) -> void:
@@ -105,8 +103,6 @@ func _update_road(delta: float) -> void:
 	for b in road_area.get_overlapping_bodies():
 		if b is VehicleController and (b as VehicleController).data.kind == "roller":
 			road_progress = minf(1.0, road_progress + delta * 0.18)
-			if not _roller_inside:
-				_roller_inside = true
 			_flatten_mark()
 			break
 	if road_progress >= 1.0 and not _road_done:
@@ -120,11 +116,7 @@ func _update_road(delta: float) -> void:
 
 func _flatten_mark() -> void:
 	# compaction changes the surface colour a bit at a time
-	var t := road_progress
-	var mat := road_strip.material_override as ShaderMaterial
-	if mat == null:
-		road_strip.material_override = MatLib.ground("gravel")
-	road_strip.scale = Vector3(1.0, 1.0 - 0.15 * t, 1.0)
+	road_strip.scale = Vector3(1.0, 1.0 - 0.15 * road_progress, 1.0)
 
 
 # ------------------------------------------------------------- crane site ---
@@ -248,11 +240,9 @@ var held_crate: Node3D = null
 func _process(delta: float) -> void:
 	_update_road(delta)
 	_update_crane(delta)
-	_sand_cd -= delta
 	if world.player != null and is_instance_valid(world.player):
 		var pl: VehicleController = world.player
-		# a bulldozer flattening a pile: any touching bulldozer slowly levels it
-		_roller_inside = false
+		# a bulldozer driving over a pile slowly levels it
 		if pl.data.kind == "bulldozer" and absf(pl.speed) > 1.0:
 			for pile in dump_piles:
 				var root: Node3D = pile["root"]
